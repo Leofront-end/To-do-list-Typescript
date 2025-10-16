@@ -1,13 +1,36 @@
 "use strict";
 (() => {
-    const todo = {
-        description: 'todo',
-        done: false
-    };
-    const reminder = {
-        description: 'reminder',
-        date: '16/10/2025'
-    };
+    class Reminder {
+        constructor(description, date, notification) {
+            this.id = '';
+            this.dateCreated = new Date;
+            this.dateUpdate = new Date;
+            this.description = '';
+            this.date = new Date;
+            this.notification = ['Email'];
+            this.description = description;
+            this.date = date;
+            this.notification = notification;
+        }
+        render() {
+            return JSON.stringify(this);
+        }
+    }
+    class Todo {
+        constructor(description) {
+            this.id = '';
+            this.dateCreated = new Date;
+            this.dateUpdate = new Date;
+            this.description = '';
+            this.done = false;
+            this.description = description;
+        }
+        render() {
+            return JSON.stringify(this);
+        }
+    }
+    const todo = new Todo('To do criado com a classe');
+    const reminder = new Reminder('Reminder criado com a classe', new Date(), ['Email']);
     const taskView = {
         render(tasks) {
             const taskList = document.getElementById('tasksList');
@@ -16,7 +39,7 @@
             }
             tasks.forEach((task) => {
                 const li = document.createElement('li');
-                const textNode = document.createTextNode(JSON.stringify(task));
+                const textNode = document.createTextNode(task.render());
                 li.appendChild(textNode);
                 taskList === null || taskList === void 0 ? void 0 : taskList.appendChild(li);
             });
