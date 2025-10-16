@@ -1,11 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Todo list</title>
 </head>
 <body>
+    <form action="" id="taskForm">
+        <fieldset id="todoSet">
+            <legend>Todo</legend>
+            <label for="todoDescription">Descrição</label>
+            <input type="text" name="todoDescription" id="todoDescription" required>
+            <button type="submit">Enviar</button>
+        </fieldset>
+        <fieldset id="reminderSet">
+            <legend>Reminder:</legend>
+            <label for="reminderDescription">Descrição</label>
+            <input type="text" name="reminderDescription" id="reminderDescription" required>
+            <label for="scheduleDate">Data:</label>
+            <input type="date" name="scheduleDate" id="scheduleDate" required>
+        </fieldset>
+    </form>
+    <ul id="tasksList"></ul>
     <script src="./dist/index.js"></script>
 </body>
 </html>
