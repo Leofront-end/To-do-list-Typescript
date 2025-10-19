@@ -60,7 +60,6 @@
         render() {
             return `
             ---> TODO <---
-            Id: ${this.id}
             description: ${this.description}
             done: ${this.done}
             `;
@@ -97,13 +96,13 @@
             const todoSet = document.getElementById('todoSet');
             const reminderSet = document.getElementById('reminderSet');
             if (mode == viewMode.TODO) {
-                todoSet === null || todoSet === void 0 ? void 0 : todoSet.setAttribute('style', 'display: block');
+                todoSet === null || todoSet === void 0 ? void 0 : todoSet.setAttribute('style', 'display: flex');
                 todoSet === null || todoSet === void 0 ? void 0 : todoSet.removeAttribute('disabled');
                 reminderSet === null || reminderSet === void 0 ? void 0 : reminderSet.setAttribute('style', 'display: none');
                 reminderSet === null || reminderSet === void 0 ? void 0 : reminderSet.setAttribute('disabled', 'true');
             }
             else {
-                reminderSet === null || reminderSet === void 0 ? void 0 : reminderSet.setAttribute('style', 'display: block');
+                reminderSet === null || reminderSet === void 0 ? void 0 : reminderSet.setAttribute('style', 'display: flex');
                 reminderSet === null || reminderSet === void 0 ? void 0 : reminderSet.removeAttribute('disabled');
                 todoSet === null || todoSet === void 0 ? void 0 : todoSet.setAttribute('style', 'display: none');
                 todoSet === null || todoSet === void 0 ? void 0 : todoSet.setAttribute('disabled', 'true');
