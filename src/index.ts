@@ -1,4 +1,28 @@
 (() => {
+    enum notificationPlataform {
+        SMS = 'SMS',
+        EMAIL = 'EMAIL',
+        PUSH_NOTIFICATION = 'PUSH_NOTIFICATION'
+    }
+
+    const UUID = ():string => {
+        return Math.random().toString(32).substring(2,9)
+    }
+
+    const DateUtils = {
+        today(): Date {
+            return new Date;
+        },
+        tomorrow (): Date {
+            const tomorrow = new Date;
+            tomorrow.setDate(tomorrow.getDate() + 1)
+            return tomorrow 
+        }, 
+        formatDate(date: Date): string {
+            return `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`
+        }
+    }
+
     interface Task {
         id: string;
         dateCreated: Date;
@@ -8,29 +32,34 @@
     }
 
     class Reminder implements Task {
-        id: string = ''
-        dateCreated: Date = new Date;
-        dateUpdate: Date = new Date;
+        id: string = UUID();
+        dateCreated: Date = DateUtils.today();
+        dateUpdate: Date = DateUtils.today();
         description: string = '';
 
-        date: Date = new Date;
-        notification: Array<string> = ['Email']
+        date: Date = DateUtils.tomorrow();
+        notification: Array<notificationPlataform> = [notificationPlataform.EMAIL]
 
-        constructor(description:string, date: Date, notification: Array<string>) {
+        constructor(description:string, date: Date, notification: Array<notificationPlataform>) {
             this.description = description;
             this.date = date;
             this.notification = notification;
         }
 
         render(): string {
-            return JSON.stringify(this)
+            return `
+            ----> REMINDER <----
+            Description: ${this.description},
+            Date: ${DateUtils.formatDate(this.date)}
+            Plataform: ${this.notification.join(',')}
+            `
         }   
     }
 
     class Todo implements Task {
-        id: string = '';
-        dateCreated: Date = new Date;
-        dateUpdate: Date = new Date;
+        id: string = UUID();
+        dateCreated: Date = DateUtils.today();
+        dateUpdate: Date = DateUtils.today();
         description: string = '';
 
         done: Boolean = false;
@@ -40,13 +69,17 @@
         }
 
         render(): string {
-            return JSON.stringify(this)
+            return `
+            ---> TODO <---
+            description: ${this.description}
+            done: ${this.done}
+            `
         }
     }
 
     const todo = new Todo('To do criado com a classe')
 
-    const reminder = new Reminder('Reminder criado com a classe', new Date(), ['Email'])
+    const reminder = new Reminder('Reminder criado com a classe', new Date(), [notificationPlataform.EMAIL])
 
     const taskView = {
         render(tasks: Array<Task>) {

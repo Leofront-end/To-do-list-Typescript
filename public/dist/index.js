@@ -1,36 +1,67 @@
 "use strict";
 (() => {
+    let notificationPlataform;
+    (function (notificationPlataform) {
+        notificationPlataform["SMS"] = "SMS";
+        notificationPlataform["EMAIL"] = "EMAIL";
+        notificationPlataform["PUSH_NOTIFICATION"] = "PUSH_NOTIFICATION";
+    })(notificationPlataform || (notificationPlataform = {}));
+    const UUID = () => {
+        return Math.random().toString(32).substring(2, 9);
+    };
+    const DateUtils = {
+        today() {
+            return new Date;
+        },
+        tomorrow() {
+            const tomorrow = new Date;
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            return tomorrow;
+        },
+        formatDate(date) {
+            return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+        }
+    };
     class Reminder {
         constructor(description, date, notification) {
-            this.id = '';
-            this.dateCreated = new Date;
-            this.dateUpdate = new Date;
+            this.id = UUID();
+            this.dateCreated = DateUtils.today();
+            this.dateUpdate = DateUtils.today();
             this.description = '';
-            this.date = new Date;
-            this.notification = ['Email'];
+            this.date = DateUtils.tomorrow();
+            this.notification = [notificationPlataform.EMAIL];
             this.description = description;
             this.date = date;
             this.notification = notification;
         }
         render() {
-            return JSON.stringify(this);
+            return `
+            ----> REMINDER <----
+            Description: ${this.description},
+            Date: ${DateUtils.formatDate(this.date)}
+            Plataform: ${this.notification.join(',')}
+            `;
         }
     }
     class Todo {
         constructor(description) {
-            this.id = '';
-            this.dateCreated = new Date;
-            this.dateUpdate = new Date;
+            this.id = UUID();
+            this.dateCreated = DateUtils.today();
+            this.dateUpdate = DateUtils.today();
             this.description = '';
             this.done = false;
             this.description = description;
         }
         render() {
-            return JSON.stringify(this);
+            return `
+            ---> TODO <---
+            description: ${this.description}
+            done: ${this.done}
+            `;
         }
     }
     const todo = new Todo('To do criado com a classe');
-    const reminder = new Reminder('Reminder criado com a classe', new Date(), ['Email']);
+    const reminder = new Reminder('Reminder criado com a classe', new Date(), [notificationPlataform.EMAIL]);
     const taskView = {
         render(tasks) {
             const taskList = document.getElementById('tasksList');
