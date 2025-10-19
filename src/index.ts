@@ -74,11 +74,7 @@
         }
 
         render(): string {
-            return `
-            ---> TODO <---
-            description: ${this.description}
-            done: ${this.done}
-            `
+            return ` ---> TODO <---,description: ${this.description},done: ${this.done}`
         }
     }
 
@@ -114,9 +110,15 @@
             } 
 
             tasks.forEach((task) => {
-                const li = document.createElement('li')
-                const textNode = document.createTextNode(task.render())
-                li.appendChild(textNode)
+                const li = document.createElement('li')     
+                const textos = task.render().trim().split(',')
+                
+                textos.forEach((texto) => {
+                    const paragrafo = document.createElement('p')
+                    paragrafo.textContent = texto
+                    li.appendChild(paragrafo)
+                })
+
                 taskList?.appendChild(li)
             })
 
